@@ -441,7 +441,7 @@ const reportActivities = activities.filter(
             try {
 
               const response = await axios.post(
-                "https://finguard-agent.onrender.com",
+                "https://finguard-agent.onrender.com/analyze",
                 {
                   amount: 95000,
                   new_device: true,
