@@ -538,3 +538,58 @@ transform: translateY(-2px);
   border-radius:20px;
   font-weight:bold;
 }
+.activity-group {
+  margin-bottom: 15px;
+}
+
+.activity-header {
+  cursor: pointer;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.06);
+  transition: 0.3s;
+}
+
+.activity-header:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.activity-list {
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
+
+.activity-item {
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+}
+
+.activity-time {
+  display: block;
+  color: #42b6ff;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.activity-event {
+  color: white;
+}
+.activity-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.activity-list::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 10px;
+}
+
+.activity-list::-webkit-scrollbar-track {
+  background: transparent;
+}

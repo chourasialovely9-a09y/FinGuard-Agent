@@ -19,6 +19,7 @@ function App() {
   const [notification, setNotification] = useState("");
   const [riskFilter, setRiskFilter] = useState("ALL");
   const [insights, setInsights] = useState("");
+  const [openActivity, setOpenActivity] = useState(null);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
     {
@@ -30,7 +31,7 @@ function App() {
   const [activities, setActivities] = useState([
   {
     time: new Date().toLocaleTimeString(),
-    event: "FinGuard Agent Started"
+    event: "FinGuard Agent Initialized"
   }
   ]);  
   const [loading, setLoading] = useState(true);
@@ -123,7 +124,7 @@ function App() {
     };
 
     setChatMessages((prev) => [...prev, aiMessage]);
-    addActivity("🤖 Agent generated response");
+    addActivity("🤖 AI assistent responded");
     setChatLoading(false);
 
   } catch (error) {
@@ -149,7 +150,7 @@ function App() {
     const data = await res.json();
 
     setInsights(data.insights);
-    addActivity("📄 Security report generated");
+    addActivity("📄AI Security report generated");
 
   } catch (error) {
 
@@ -169,7 +170,7 @@ function App() {
         time: new Date().toLocaleTimeString(),
         event
       },
-      ...prev.slice(0, 9)
+      ...prev.slice(0, 19)
     ]);
 
   };
@@ -231,7 +232,23 @@ function App() {
   setLastAlertId(newestAlert._id);
 
   }, [alerts]);
+  const fraudActivities = activities.filter(
+  activity =>
+    activity.event.toLowerCase().includes("fraud") ||
+    activity.event.toLowerCase().includes("risk") ||
+    activity.event.toLowerCase().includes("detected")
+);
 
+const blockActivities = activities.filter(
+  activity =>
+    activity.event.toLowerCase().includes("block") ||
+    activity.event.toLowerCase().includes("blocked")
+);
+
+const reportActivities = activities.filter(
+  activity =>
+    activity.event.toLowerCase().includes("report")
+);
   // Loading Screen
 
   if (loading) {
@@ -445,7 +462,7 @@ function App() {
                 "🚨 High-risk transaction detected"
               );
               addActivity(
-                "🛑 Transaction blocked"
+                "🛑 High-risk transaction auto-blocked"
               );
 
               setTimeout(() => {
@@ -679,7 +696,7 @@ function App() {
         </table>
         </div>    
       </div>
-
+              {/* AI insights generator button */}
       <div style={{ marginTop: "30px", marginBottom: "20px" }}>
         <button
           onClick={fetchInsights}
@@ -732,86 +749,111 @@ function App() {
 
         <div className="agent-status-card">
 
-          <h2>🤖 FinGuard Agent Status</h2>
+                  <h2>🤖 FinGuard Agent Status</h2>
 
-          <div className="agent-status-grid">
+                  <div className="agent-status-grid">
 
-            <div className="status-item">
-              <span>Status</span>
-              <strong className="status-active">
-                ACTIVE
-              </strong>
-            </div>
+                    <div className="status-item">
+                      <span>Status</span>
+                      <strong className="status-active">
+                        ACTIVE
+                      </strong>
+                    </div>
 
-            <div className="status-item">
-              <span>Tools Connected</span>
-              <strong>
-                4
-              </strong>
-            </div>
+                    <div className="status-item">
+                      <span>Tools Connected</span>
+                      <strong>
+                        4
+                      </strong>
+                    </div>
 
-            <div className="status-item">
-              <span>Transactions</span>
-              <strong>
-                {stats?.total_transactions || 0}
-              </strong>
-            </div>
+                    <div className="status-item">
+                      <span>Transactions</span>
+                      <strong>
+                        {stats?.total_transactions || 0}
+                      </strong>
+                    </div>
 
-            <div className="status-item">
-              <span>Alerts</span>
-              <strong>
-                {stats?.total_alerts || 0}
-              </strong>
-            </div>
+                    <div className="status-item">
+                      <span>Alerts</span>
+                      <strong>
+                        {stats?.total_alerts || 0}
+                      </strong>
+                    </div>
 
-            <div className="status-item">
-              <span>High Risk</span>
-              <strong className="status-danger">
-                {stats?.high_risk_transactions || 0}
-              </strong>
-            </div>
+                    <div className="status-item">
+                      <span>High Risk</span>
+                      <strong className="status-danger">
+                        {stats?.high_risk_transactions || 0}
+                      </strong>
+                    </div>
 
-            <div className="status-item">
-              <span>Blocked</span>
-              <strong>
-                {stats?.blocked_transactions || 0}
-              </strong>
-            </div>
+                    <div className="status-item">
+                      <span>Blocked</span>
+                      <strong>
+                        {stats?.blocked_transactions || 0}
+                      </strong>
+                    </div>
 
-          </div>
+                  </div>
 
-        </div>  
+                </div>  
 
-        {/* Agent Activity Feed */}
+       {/* Agent Activity Feed */}
 
         <div className="activity-card">
 
           <h2>⚡ Agent Activity</h2>
 
-          <div className="activity-list">
+          <div className="activity-group">
 
-            {activities.map((activity, index) => (
+            <div
+              className="activity-header"
+              onClick={() =>
+                setOpenActivity(
+                  openActivity === "all" ? null : "all"
+                )
+              }
+            >
+              {openActivity === "all" ? "▼" : "▶"} 📋 Activity Timeline ({activities.length})
+            </div>
+
+            {openActivity === "all" && (
 
               <div
-                key={index}
-                className="activity-item"
+                className="activity-list"
+                style={{
+                  maxHeight: "320px",
+                  overflowY: "auto"
+                }}
               >
 
-                <span className="activity-time">
-                  {activity.time}
-                </span>
+                {activities.map((activity, index) => (
 
-                <span className="activity-event">
-                  {activity.event}
-                </span>
+                  <div
+                    key={index}
+                    className="activity-item"
+                  >
+
+                    <span className="activity-time">
+                      {activity.time}
+                    </span>
+
+                    <span className="activity-event">
+                      {activity.event}
+                    </span>
+
+                  </div>
+
+                ))}
 
               </div>
 
-            ))}
+            )}
 
           </div>
 
-        </div>  
+        </div>
 
       {/* AI Chatbot */}
 
