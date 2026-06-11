@@ -92,7 +92,7 @@ async def dashboard_stats():
 
     blocked_transactions = (
         transactions_collection.count_documents({
-            "action.action": "BLOCK_TRANSACTION"
+            "action_taken.action": "BLOCK_TRANSACTION"
         })
     )
 

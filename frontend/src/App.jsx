@@ -110,7 +110,7 @@ function App() {
   try {
     setChatLoading(true);
     const response = await axios.post(
-      "https://finguard-agent.onrender.com",
+      "https://finguard-agent.onrender.com/chat",
       {
         message: chatInput
       }
@@ -142,7 +142,7 @@ function App() {
   try {
 
     const res = await fetch(
-      "https://finguard-agent.onrender.com"
+      "https://finguard-agent.onrender.com/agent-insights"
     );
 
     const data = await res.json();
@@ -187,7 +187,7 @@ function App() {
       fetchAlerts();
       fetchTransactions();
 
-    }, 5000);
+    }, 25000);
     
     return () => clearInterval(interval);
 
