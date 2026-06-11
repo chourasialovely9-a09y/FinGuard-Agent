@@ -62,7 +62,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        "https://finguard-agent.onrender.com"
+        "https://finguard-agent.onrender.com/alerts"
       );
 
       setAlerts(response.data);
@@ -81,7 +81,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        "https://finguard-agent.onrender.com"
+        "https://finguard-agent.onrender.com/transactions"
       );
 
       setTransactions(response.data);
