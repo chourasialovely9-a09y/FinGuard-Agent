@@ -44,9 +44,7 @@ function App() {
 
     try {
 
-      const response = await axios.get(
-        "http://127.0.0.1:8000/dashboard-stats"
-      );
+      const response = await axios.get("https://finguard-agent.onrender.com/dashboard-stats");
 
       setStats(response.data);
 
@@ -64,7 +62,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        "http://127.0.0.1:8000/alerts"
+        "https://finguard-agent.onrender.com"
       );
 
       setAlerts(response.data);
@@ -83,7 +81,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        "http://127.0.0.1:8000/transactions"
+        "https://finguard-agent.onrender.com"
       );
 
       setTransactions(response.data);
@@ -112,7 +110,7 @@ function App() {
   try {
     setChatLoading(true);
     const response = await axios.post(
-      "http://127.0.0.1:8000/chat",
+      "https://finguard-agent.onrender.com",
       {
         message: chatInput
       }
@@ -144,7 +142,7 @@ function App() {
   try {
 
     const res = await fetch(
-      "http://127.0.0.1:8000/agent-insights"
+      "https://finguard-agent.onrender.com"
     );
 
     const data = await res.json();
@@ -443,7 +441,7 @@ const reportActivities = activities.filter(
             try {
 
               const response = await axios.post(
-                "http://127.0.0.1:8000/analyze",
+                "https://finguard-agent.onrender.com",
                 {
                   amount: 95000,
                   new_device: true,
